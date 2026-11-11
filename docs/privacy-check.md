@@ -42,7 +42,7 @@ into a chat. Open the file at that line and decide.
        git add -A && git commit -m "log: what changed"
 
 3. If the match is harmless, add the exact matched text to `scripts/privacy-allow.txt`.
-4. To push once despite findings: `CT_SKIP_PRIVACY=1 git push`.
+4. To push once despite findings: `HLE_SKIP_PRIVACY=1 git push`.
 
 If the text was already pushed, fixing the file is not enough: the old commit stays in history.
 Rewrite history and force-push (`git push --force-with-lease`), and treat any secret as exposed

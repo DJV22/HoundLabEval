@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # log-turn.sh - append one conversation turn (from the clipboard) to today's session log.
 #
-# Set CT_USER_LABEL to change the speaker label for your messages (default USER).
+# Set HLE_USER_LABEL to change the speaker label for your messages (default USER).
 # Usage: scripts/log-turn.sh <user|claude> [--stdin] [--turn N] [--session NAME] [--no-commit]
 #   user    wraps the clipboard text in a speaker heading (USER by default) + blockquote
 #   claude  appends the clipboard text as-is (Claude replies already carry their own rules/heading)
@@ -11,8 +11,8 @@ set -euo pipefail
 
 # Inside a Flatpak sandbox (e.g. VSCodium from Flathub) host tools like xclip, git and your
 # SSH keys are invisible. Re-run this script on the host via flatpak-spawn instead.
-if [[ ( -e /.flatpak-info || -n "${CT_FORCE_FLATPAK:-}" ) && -z "${CT_ON_HOST:-}" ]]; then
-  exec flatpak-spawn --host --env=CT_ON_HOST=1 --env=DISPLAY="${DISPLAY:-:0}" \
+if [[ ( -e /.flatpak-info || -n "${HLE_FORCE_FLATPAK:-}" ) && -z "${HLE_ON_HOST:-}" ]]; then
+  exec flatpak-spawn --host --env=HLE_ON_HOST=1 --env=DISPLAY="${DISPLAY:-:0}" \
        "$(readlink -f "${BASH_SOURCE[0]}")" "$@"
 fi
 
@@ -32,7 +32,7 @@ done
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 today="$(date +%F)"
-label_user="${CT_USER_LABEL:-USER}"
+label_user="${HLE_USER_LABEL:-USER}"
 file="$root/log/$today${session:+-$session}.md"
 mkdir -p "$root/log"
 
@@ -83,7 +83,7 @@ fi
 
 msg="Logged ${role} turn ${turn} -> ${file#"$root"/}"
 echo "$msg"
-command -v notify-send >/dev/null && notify-send "CopperToolchain" "$msg" || true
+command -v notify-send >/dev/null && notify-send "Hound Lab Eval" "$msg" || true
 
 if (( commit )) && git -C "$root" rev-parse --git-dir >/dev/null 2>&1; then
   git -C "$root" add "$file"

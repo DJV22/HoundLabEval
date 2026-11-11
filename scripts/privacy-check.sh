@@ -94,7 +94,7 @@ $count possible issue(s). Nothing was changed.
       git add -A && git commit -m "log: <what changed>"
     (No origin/main yet? Start history over: git update-ref -d HEAD && git add -A && git commit -m "Initial commit")
  3. Harmless match? Add the matched text to scripts/privacy-allow.txt.
- 4. One-time override for a push: CT_SKIP_PRIVACY=1 git push
+ 4. One-time override for a push: HLE_SKIP_PRIVACY=1 git push
 MSG
-(( notify )) && command -v notify-send >/dev/null && notify-send -u critical "CopperToolchain privacy check" "$count possible issue(s); push blocked"
+(( notify )) && command -v notify-send >/dev/null && notify-send -u critical "Hound Lab Eval privacy check" "$count possible issue(s); push blocked"
 exit 1

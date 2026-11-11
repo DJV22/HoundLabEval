@@ -12,7 +12,7 @@ fi
 cat > "$hook" << 'HOOK'
 #!/usr/bin/env bash
 # Installed by scripts/install-hooks.sh: stop pushes that contain possible personal details.
-[[ -n "${CT_SKIP_PRIVACY:-}" ]] && exit 0
+[[ -n "${HLE_SKIP_PRIVACY:-}" ]] && exit 0
 root="$(git rev-parse --show-toplevel)"
 exec "$root/scripts/privacy-check.sh" --unpushed --notify
 HOOK
